@@ -4,7 +4,7 @@ using BankAPI.Data.BankModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BankAPI.Controllers;
-//[Authorize]
+[Authorize] //Authorize
 [ApiController]
 [Route("api/[controller]")]
 public class ClientController : ControllerBase{
@@ -30,7 +30,7 @@ public class ClientController : ControllerBase{
     return client; 
   }
 
-//[Authorize(Policy = "SuperAdmin")]
+[Authorize(Policy = "SuperAdmin")] //Authorize
 [HttpPost("create")]
   public async Task <IActionResult> Create(Client client){
 
@@ -39,7 +39,7 @@ public class ClientController : ControllerBase{
     return CreatedAtAction(nameof(GetById),new { id=newClient.Id}, newClient);
   }
 
-//[Authorize(Policy = "SuperAdmin")]
+[Authorize(Policy = "SuperAdmin")] //Authorize
   [HttpPut("update/{id}")]
   public async Task <IActionResult> Update(int id, Client client){
     if(id!=client.Id){
@@ -54,7 +54,7 @@ public class ClientController : ControllerBase{
     }
   }
 
-  //[Authorize(Policy = "SuperAdmin")]
+ [Authorize(Policy = "SuperAdmin")]//Authorize
   [HttpDelete("delete/{id}")]
   public async Task <IActionResult> Delete(int id){
   

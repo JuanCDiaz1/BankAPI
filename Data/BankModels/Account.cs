@@ -7,10 +7,6 @@ namespace BankAPI.Data.BankModels{
 public partial class Account
 {
 
-    public Account()
-    {
-        BankTransactions = new HashSet<BankTransaction>();
-    }
     public int Id { get; set; }
 
     public int AccountType { get; set; }

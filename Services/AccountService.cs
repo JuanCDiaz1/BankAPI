@@ -1,7 +1,7 @@
 using BankAPI.Data;
 using BankAPI.Data.BankModels;
 using Microsoft.EntityFrameworkCore;
-using TestBankAPI.Data.DTOs;
+using BankAPI.Data.DTOs;
 namespace BankAPI.Services;
 
 
@@ -51,7 +51,6 @@ public class AccountService{
    
     var existingAccount =await GetById(account.Id);
     if (existingAccount is not null){
-       
     existingAccount.AccountType=account.AccountType;
     existingAccount.ClientId=account.ClientId;
     existingAccount.Balance=account.Balance;

@@ -22,6 +22,8 @@ public partial class Client
 [EmailAddress(ErrorMessage = "El formato de email es incorrecto")]
     public string? Email { get; set; }
 
+    public string? Pwd { get; set; }
+
     public DateTime RegDate { get; set; }
 
 [JsonIgnore]

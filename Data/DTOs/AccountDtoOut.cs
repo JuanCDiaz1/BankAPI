@@ -1,4 +1,4 @@
-namespace TestBankAPI.Data.DTOs;
+namespace BankAPI.Data.DTOs;
 
 
 public class AccountDtoOut{

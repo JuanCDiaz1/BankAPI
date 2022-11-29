@@ -1,7 +1,9 @@
-namespace TestBankAPI.Data.DTOs;
+
+namespace BankAPI.Data.DTOs;
 
 
 public class AccountDtoIn{
+
      public int Id { get; set; }
 
     public int AccountType { get; set; }

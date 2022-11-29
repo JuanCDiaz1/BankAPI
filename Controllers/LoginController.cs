@@ -20,8 +20,9 @@ public LoginController(LoginService loginService, IConfiguration config){
     this.loginService=loginService;
     this.config=config;
 }
-[HttpPost("authenticate")]
 
+
+[HttpPost("admin")]
 public async Task<IActionResult> Login(AdminDto adminDto ){
      var admin = await loginService.GetAdmin(adminDto);
      if(admin is null){
@@ -32,6 +33,20 @@ public async Task<IActionResult> Login(AdminDto adminDto ){
 
      return Ok(new {token=jwtToken});
 }
+
+
+[HttpPost("client")]
+public async Task<IActionResult> ClientAuth(ClientDto clientDto ){
+     var client = await loginService.GetClient(clientDto);
+     if(client is null){
+        return BadRequest(new {message = "Credenciales inválidas. "});
+     }
+
+    string jwtToken=GenerateTokenClient(client); 
+
+     return Ok(new {token=jwtToken});
+}
+
 private string GenerateToken (Administrator admin){
     var claims = new[]{
         new Claim(ClaimTypes.Name, admin.Name),
@@ -39,8 +54,23 @@ private string GenerateToken (Administrator admin){
         new Claim("AdminType", admin.AdminType)
 
     };
-
     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JWT:Key").Value));
+    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+    var securityToken=new JwtSecurityToken(
+        claims: claims,
+        expires: DateTime.Now.AddMinutes(60),
+        signingCredentials: creds);
+   string token = new JwtSecurityTokenHandler().WriteToken(securityToken);  
+ return token;
+} 
+private string GenerateTokenClient (Client client){
+    var claims = new[]{
+        new Claim(ClaimTypes.Name, client.Name),
+           new Claim(ClaimTypes.Email,client.Email),
+            new Claim("Email", client.Email)
+
+    };
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("JWT:Key2").Value));
     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
     var securityToken=new JwtSecurityToken(
         claims: claims,
